@@ -1,9 +1,9 @@
-use crate::gradients::{GradientParam, Vec2D, WrapType};
+use crate::gradients::{Addressing, GradientParam, Vec2D};
 
 pub struct Linear {
-    start: [u32; 2],
-    end: [u32; 2],
-    mode: WrapType,
+    start: [i32; 2],
+    end: [i32; 2],
+    addressing: Addressing,
 }
 
 impl Linear {
@@ -11,26 +11,31 @@ impl Linear {
         Linear {
             start: [0, 0],
             end: [800, 800],
-            mode: WrapType::CLAMP,
+            addressing: Addressing::Clamp,
         }
     }
 
-    pub fn start(mut self, start: [u32; 2]) -> Self {
+    pub fn start(mut self, start: [i32; 2]) -> Self {
         self.start = start;
         self
     }
 
-    pub fn end(mut self, end: [u32; 2]) -> Self {
+    pub fn end(mut self, end: [i32; 2]) -> Self {
         self.end = end;
+        self
+    }
+
+    pub fn addressing(mut self, addressing: Addressing) -> Self {
+        self.addressing = addressing;
         self
     }
 }
 
 impl GradientParam for Linear {
-    fn t(&self, coordinate: [u32; 2]) -> f64 {
+    fn t(&self, coordinate: [i32; 2]) -> f64 {
         let d = Vec2D::new(self.start, self.end);
         let v = Vec2D::new(self.start, coordinate);
 
-        d.dot(&v) as f64 / d.dot(&d) as f64
+        self.addressing.apply(d.dot(&v) as f64 / d.dot(&d) as f64)
     }
 }
