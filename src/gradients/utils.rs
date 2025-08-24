@@ -82,4 +82,8 @@ impl Vec2D {
     pub fn magnitude(&self) -> f64 {
         ((self.x).pow(2) as f64 + (self.y).pow(2) as f64).sqrt()
     }
+
+    pub fn angle(&self) -> f64 {
+        (self.y as f64).atan2(self.x as f64)
+    }
 }

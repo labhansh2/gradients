@@ -11,7 +11,14 @@
 - [x] handle negative vector ops - idk why i used u32
 - [x] modularize to add more
 - [ ] more gradients
-    - [ ] radial
+    - Shape Based
+    - [x] radial
+    - [ ] conical
+    - [ ] diamond
+    - [ ] square
+    - Function Based
+    - [ ] Sin
+
 
 ### IDEAS
 

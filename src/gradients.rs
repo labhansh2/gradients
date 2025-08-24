@@ -1,12 +1,18 @@
 use image::{Rgb, RgbImage};
 
+pub mod conical;
+pub mod diamond;
 pub mod linear;
 pub mod radial;
+pub mod square;
 pub mod utils;
 
 use crate::color::{Color, ColorLine};
+pub use conical::*;
+pub use diamond::*;
 pub use linear::*;
 pub use radial::*;
+pub use square::*;
 pub use utils::*;
 
 pub trait GradientParam {
@@ -78,6 +84,7 @@ impl<M: GradientParam> Gradient<M> {
             let mut row: Vec<Color> = Vec::new();
             for x in 0..self.width - 1 {
                 let t = self.method.t([x as i32, y as i32]);
+                let t = self.config.easing.apply(t);
                 print!("[{}, {}]: {} -> ", x, y, t);
                 row.push(self.colors.interpolate(t));
             }
