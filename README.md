@@ -13,11 +13,20 @@
 - [ ] more gradients
     - Shape Based
     - [x] radial
-    - [ ] conical
-    - [ ] diamond
-    - [ ] square
+    - [x] conical
+    - [x] diamond
+    - [x] square
     - Function Based
-    - [ ] Sin
+    - [x] Sin
+    - [x] Spiral
+    - [x] Polynomial
+    - Noise Based
+    - [ ] Perlin
+    - [ ] Simplex
+    - [ ] Fractal
+    - [ ] Vorley
+- [ ] gradient mix? yes
+- [ ] own image encoder?
 
 
 ### IDEAS

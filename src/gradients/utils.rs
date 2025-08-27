@@ -46,6 +46,16 @@ impl Easing {
     }
 }
 
+pub fn normalize_rng(
+    t: f64,
+    current_range: [f64; 2],
+    desired_range: [f64; 2],
+) -> f64 {
+    (t - current_range[0]) / (current_range[1] - current_range[0])
+        * (desired_range[1] - desired_range[0])
+        + desired_range[0]
+}
+
 pub struct Vec2D {
     x: i32,
     y: i32,

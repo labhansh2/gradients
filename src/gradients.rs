@@ -1,19 +1,33 @@
-use image::{Rgb, RgbImage};
+use image::{ImageBuffer, Rgb, RgbImage};
 
+// shape based
 pub mod conical;
 pub mod diamond;
 pub mod linear;
 pub mod radial;
 pub mod square;
+
+// function based
+pub mod polynomial;
+pub mod sinusoidal;
+pub mod spiral;
 pub mod utils;
 
+// utils
 use crate::color::{Color, ColorLine};
+pub use utils::*;
+
+// shape based
 pub use conical::*;
 pub use diamond::*;
 pub use linear::*;
 pub use radial::*;
 pub use square::*;
-pub use utils::*;
+
+// function based
+pub use polynomial::*;
+pub use sinusoidal::*;
+pub use spiral::*;
 
 pub trait GradientParam {
     fn t(&self, coordinate: [i32; 2]) -> f64;
@@ -64,7 +78,7 @@ impl<M: GradientParam> Gradient<M> {
             for x in 0..self.width {
                 let t = self.method.t([x as i32, y as i32]);
                 let t = self.config.easing.apply(t);
-                print!("[{}, {}]: {} -> ", x, y, t);
+                // print!("[{}, {}]: {} -> ", x, y, t);
                 let color = self.colors.interpolate(t);
                 rbg_img.put_pixel(
                     x,
