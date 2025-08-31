@@ -1,7 +1,7 @@
 use crate::gradients::{Addressing, GradientParam};
 
 pub struct Square {
-    center: [i32; 2],
+    center: (f64, f64),
     max_distance: f64,
     addressing: Addressing,
 }
@@ -9,13 +9,13 @@ pub struct Square {
 impl Square {
     pub fn new() -> Self {
         Square {
-            center: [800 / 2, 800 / 2],
+            center: (400.0, 400.0),
             max_distance: 400.0,
             addressing: Addressing::Clamp,
         }
     }
 
-    pub fn center(mut self, center: [i32; 2]) -> Self {
+    pub fn center(mut self, center: (f64, f64)) -> Self {
         self.center = center;
         self
     }
@@ -32,11 +32,11 @@ impl Square {
 }
 
 impl GradientParam for Square {
-    fn t(&self, coordinate: [i32; 2]) -> f64 {
+    fn t(&self, coordinate: (f64, f64)) -> f64 {
         // max(|x-cx|, |y-cy|)
-        let distance = (coordinate[0] - self.center[0])
+        let distance = (coordinate.0 - self.center.0)
             .abs()
-            .max((coordinate[1] - self.center[1]).abs())
+            .max((coordinate.1 - self.center.1).abs())
             as f64;
         let t = distance / self.max_distance;
 

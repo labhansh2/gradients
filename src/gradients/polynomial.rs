@@ -1,7 +1,7 @@
 use crate::gradients::{Addressing, GradientParam, Vec2D};
 
 pub struct Polynomial {
-    origin: [i32; 2],
+    origin: (f64, f64),
     direction: Option<Vec2D>,
     exponent: f64,
     max_distance: f64,
@@ -11,7 +11,7 @@ pub struct Polynomial {
 impl Polynomial {
     pub fn new() -> Self {
         Polynomial {
-            origin: [400, 400],
+            origin: (400.0, 400.0),
             direction: None,
             exponent: 2.0,
             max_distance: 400.0,
@@ -19,7 +19,7 @@ impl Polynomial {
         }
     }
 
-    pub fn origin(mut self, origin: [i32; 2]) -> Self {
+    pub fn origin(mut self, origin: (f64, f64)) -> Self {
         self.origin = origin;
         self
     }
@@ -31,8 +31,8 @@ impl Polynomial {
 
     pub fn direction_from_coordinates(
         mut self,
-        coordinate_a: [i32; 2],
-        coordinate_b: [i32; 2],
+        coordinate_a: (f64, f64),
+        coordinate_b: (f64, f64),
     ) -> Self {
         let d = Vec2D::new(coordinate_a, coordinate_b);
         self.direction = Some(d);
@@ -56,7 +56,7 @@ impl Polynomial {
 }
 
 impl GradientParam for Polynomial {
-    fn t(&self, coordinate: [i32; 2]) -> f64 {
+    fn t(&self, coordinate: (f64, f64)) -> f64 {
         let v = Vec2D::new(self.origin, coordinate);
 
         let position: f64 = if let Some(d) = &self.direction {

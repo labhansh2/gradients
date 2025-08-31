@@ -65,14 +65,14 @@ impl ColorLine {
             * (1.0 - new_t)
             + self.colors[next_index as usize].2 as f64 * new_t;
 
-        // let rr = r as u8;
-        // let gg = g as u8;
-        // let bb = b as u8;
-        // print!("Color({rr}, {gg}, {bb})");
-        // println!(
-        //     "\x1b[48;2;{};{};{}m  \x1b[0m Color({rr}, {gg}, {bb})\n",
-        //     rr, gg, bb
-        // );
+        let rr = r as u8;
+        let gg = g as u8;
+        let bb = b as u8;
+        print!("Color({rr}, {gg}, {bb})");
+        println!(
+            "\x1b[48;2;{};{};{}m  \x1b[0m Color({rr}, {gg}, {bb})\n",
+            rr, gg, bb
+        );
 
         Color(r as u8, g as u8, b as u8)
     }

@@ -21,13 +21,18 @@
     - [x] Spiral
     - [x] Polynomial
     - Noise Based
+    - [x] Random
     - [ ] Perlin
     - [ ] Simplex
     - [ ] Fractal
     - [ ] Vorley
+- [ ] cache color for t
 - [ ] gradient mix? yes
 - [ ] own image encoder?
+- [ ] write a generic vec2d
 
+- side tasks
+- [ ] mutable gradient method reference
 
 ### IDEAS
 

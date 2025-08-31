@@ -13,6 +13,10 @@ pub mod sinusoidal;
 pub mod spiral;
 pub mod utils;
 
+// noise based
+pub mod perlin_noise;
+pub mod random_noise;
+
 // utils
 use crate::color::{Color, ColorLine};
 pub use utils::*;
@@ -29,8 +33,12 @@ pub use polynomial::*;
 pub use sinusoidal::*;
 pub use spiral::*;
 
+// noise based
+pub use perlin_noise::*;
+pub use random_noise::*;
+
 pub trait GradientParam {
-    fn t(&self, coordinate: [i32; 2]) -> f64;
+    fn t(&self, coordinate: (f64, f64)) -> f64;
 }
 
 pub struct GradientConfig {
@@ -70,15 +78,15 @@ impl<M: GradientParam> Gradient<M> {
     }
 
     // TO DO
-    // pub fn method_from_str(&mut self, method: &str) -> Self {}
+    // pub fn method_from_str(& self, method: &str) -> Self {}
 
     pub fn to_rbg_img(&self) -> RgbImage {
         let mut rbg_img = RgbImage::new(self.width, self.height);
         for y in 0..self.height {
             for x in 0..self.width {
-                let t = self.method.t([x as i32, y as i32]);
+                let t = self.method.t((x as f64, y as f64));
                 let t = self.config.easing.apply(t);
-                // print!("[{}, {}]: {} -> ", x, y, t);
+                print!("[{}, {}]: {} -> ", x, y, t);
                 let color = self.colors.interpolate(t);
                 rbg_img.put_pixel(
                     x,
@@ -97,7 +105,7 @@ impl<M: GradientParam> Gradient<M> {
         for y in 0..self.height - 1 {
             let mut row: Vec<Color> = Vec::new();
             for x in 0..self.width - 1 {
-                let t = self.method.t([x as i32, y as i32]);
+                let t = self.method.t((x as f64, y as f64));
                 let t = self.config.easing.apply(t);
                 print!("[{}, {}]: {} -> ", x, y, t);
                 row.push(self.colors.interpolate(t));

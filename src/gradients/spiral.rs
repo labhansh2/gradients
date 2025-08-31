@@ -1,7 +1,7 @@
 use crate::gradients::{Addressing, GradientParam, Vec2D};
 
 pub struct Spiral {
-    center: [i32; 2],
+    center: (f64, f64),
     spiral_factor: f64,
     addressing: Addressing,
 }
@@ -10,13 +10,13 @@ impl Spiral {
     pub fn new() -> Self {
         // this might need better defaults
         Spiral {
-            center: [400, 400],
+            center: (400.0, 400.0),
             spiral_factor: 0.02,
             addressing: Addressing::Wrap,
         }
     }
 
-    pub fn center(mut self, center: [i32; 2]) -> Self {
+    pub fn center(mut self, center: (f64, f64)) -> Self {
         self.center = center;
         self
     }
@@ -33,7 +33,7 @@ impl Spiral {
 }
 
 impl GradientParam for Spiral {
-    fn t(&self, coordinate: [i32; 2]) -> f64 {
+    fn t(&self, coordinate: (f64, f64)) -> f64 {
         let v = Vec2D::new(self.center, coordinate);
 
         let angle = v.angle();
