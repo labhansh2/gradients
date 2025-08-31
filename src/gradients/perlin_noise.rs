@@ -1,7 +1,7 @@
-use std::cell::RefCell;
-use std::collections::HashMap;
+use std::collections::hash_map::DefaultHasher;
+use std::hash::{Hash, Hasher};
 
-use rand::Rng;
+use rand::{self, Rng};
 
 use crate::gradients::{
     Easing::Smootherstep as easing, GradientParam, Vec2D,
@@ -10,14 +10,15 @@ use crate::gradients::{
 
 pub struct PerlinNoise {
     grid_size: (u32, u32),
-    grid_vector_map: RefCell<HashMap<(u32, u32), Vec2D>>,
+    seed: u64,
 }
 
 impl PerlinNoise {
     pub fn new() -> Self {
+        let mut rng = rand::rng();
         PerlinNoise {
             grid_size: (400, 400),
-            grid_vector_map: RefCell::new(HashMap::new()),
+            seed: rng.random() // random seed if not seeded explicitly 
         }
     }
 
@@ -26,25 +27,22 @@ impl PerlinNoise {
         self
     }
 
+    pub fn seed(mut self, seed: u64) -> Self {
+        self.seed = seed;
+        self
+    }
+
     fn get_gradient_vector(&self, coordinate: (u32, u32)) -> Vec2D {
-        // TODO: can use a hash as seed
-        if let Some(v) =
-            self.grid_vector_map.borrow().get(&coordinate)
-        {
-            return v.clone();
-        } else {
-            let mut rnd = rand::rng();
+        let mut hasher = DefaultHasher::new();
+        self.seed.hash(&mut hasher);
+        coordinate.0.hash(&mut hasher);
+        coordinate.1.hash(&mut hasher);
+        let hash = hasher.finish();
 
-            let theta: f64 =
-                rnd.random::<f64>() * std::f64::consts::TAU;
-            let random_vec =
-                Vec2D::new((0.0, 0.0), (theta.cos(), theta.sin()));
+        let theta: f64 =
+            (hash as f64 / u64::MAX as f64) * std::f64::consts::TAU;
 
-            self.grid_vector_map
-                .borrow_mut()
-                .insert(coordinate, random_vec.clone());
-            return random_vec;
-        };
+        Vec2D::new((0.0, 0.0), (theta.cos(), theta.sin()))
     }
 }
 

@@ -22,19 +22,23 @@
     - [x] Polynomial
     - Noise Based
     - [x] Random
-    - [ ] Perlin
+    - [x] Perlin
     - [ ] Simplex
     - [ ] Fractal
     - [ ] Vorley
+    - Procedural
+    
 - [ ] cache color for t
-- [ ] gradient mix? yes
-- [ ] own image encoder?
-- [ ] write a generic vec2d
-
-- side tasks
-- [ ] mutable gradient method reference
+- [x] random gradient vectors in perlin using coordinate hash
+- [x] seeding in perlin 
+- [x] frequency and seeding for random noise
+- [ ] gradient mix
+- [ ] add quantization of colors
 
 ### IDEAS
 
 - [ ] can stream gradient by yeilding for web server
 - [ ] impl a randomizer
+- [ ] randomized color lines?
+- [ ] filters?
+- [ ] own image encoder?
