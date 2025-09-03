@@ -23,16 +23,23 @@
     - Noise Based
     - [x] Random
     - [x] Perlin
+        - [x] look up what octaves are
+        - [x] add octaves 
+        - [x] fix overflow
+            - the number of octaves should be less than log base 2 (grid_size.0) becuase a pixel cannot be smaller than 1 by 1
+        - [x] random gradient vectors for octaves
     - [ ] Simplex
     - [ ] Fractal
     - [ ] Vorley
     - Procedural
     
+- [ ] better error handling
 - [ ] cache color for t
 - [x] random gradient vectors in perlin using coordinate hash
 - [x] seeding in perlin 
-- [x] frequency and seeding for random noise
+- [x] frequency and seeding for random noisec
 - [ ] gradient mix
+- [ ] add more interploation methods in ColorLine
 - [ ] add quantization of colors
 
 ### IDEAS

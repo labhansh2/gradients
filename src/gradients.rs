@@ -82,11 +82,22 @@ impl<M: GradientParam> Gradient<M> {
 
     pub fn to_rbg_img(&self) -> RgbImage {
         let mut rbg_img = RgbImage::new(self.width, self.height);
+        let mut min = std::f64::MAX;
+        let mut max = std::f64::MIN;
+
         for y in 0..self.height {
             for x in 0..self.width {
                 let t = self.method.t((x as f64, y as f64));
                 let t = self.config.easing.apply(t);
-                print!("[{}, {}]: {} -> ", x, y, t);
+
+                if t < min {
+                    min = t
+                }
+
+                if t > max {
+                    max = t
+                }
+                // print!("[{}, {}]: {} -> ", x, y, t);
                 let color = self.colors.interpolate(t);
                 rbg_img.put_pixel(
                     x,
@@ -95,6 +106,8 @@ impl<M: GradientParam> Gradient<M> {
                 );
             }
         }
+        println!("Min{}", min);
+        println!("Max{}", max);
         rbg_img
     }
 
